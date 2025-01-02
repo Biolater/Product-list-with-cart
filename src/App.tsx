@@ -1,35 +1,95 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import ProductCart from "./components/ProductCart";
+import waffle from "./images/image-waffle-mobile.jpg";
+import cremeBrulee from "./images/image-creme-brulee-mobile.jpg";
+import macaron from "./images/image-macaron-mobile.jpg";
+import tiramisu from "./images/image-tiramisu-mobile.jpg";
+import baklava from "./images/image-baklava-mobile.jpg";
+import pie from "./images/image-meringue-mobile.jpg";
+import cake from "./images/image-cake-mobile.jpg";
+import brownie from "./images/image-brownie-mobile.jpg";
+import pannaCotta from "./images/image-panna-cotta-mobile.jpg";
+import YourCart from "./components/YourCart";
+import { useEffect, useState } from "react";
+
+const PRODUCTS = [
+  {
+    imageSrc: waffle,
+    productName: "Waffle",
+    productNameTwo: "Waffle with Berries",
+    price: 6.5,
+  },
+  {
+    imageSrc: cremeBrulee,
+    productName: "Crème Brûlée",
+    productNameTwo: "Vanilla Bean Crème Brûlée",
+    price: 7,
+  },
+  {
+    imageSrc: macaron,
+    productName: "Macaron",
+    productNameTwo: "Macaron mix of Five",
+    price: 8,
+  },
+  {
+    imageSrc: tiramisu,
+    productName: "Tiramisu",
+    productNameTwo: "Classic Tiramisu",
+    price: 5.5,
+  },
+  {
+    imageSrc: baklava,
+    productName: "Baklava",
+    productNameTwo: "Pistachio Baklava",
+    price: 4,
+  },
+  {
+    imageSrc: pie,
+    productName: "Pie",
+    productNameTwo: "Lemon Meringue Pie",
+    price: 5,
+  },
+  {
+    imageSrc: cake,
+    productName: "Cake",
+    productNameTwo: "Red Velvet Cake",
+    price: 4.5,
+  },
+  {
+    imageSrc: brownie,
+    productName: "Brownie",
+    productNameTwo: "Salted Caramel Brownie",
+    price: 5.5,
+  },
+  {
+    imageSrc: pannaCotta,
+    productName: "Panna Cotta",
+    productNameTwo: "Vanilla Panna Cotta",
+    price: 6.5,
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [selectedProducts, setSelectedProducts] = useState<typeof PRODUCTS>([]);
+  const handleProductSelect = (product: (typeof PRODUCTS)[0]) => {
+    setSelectedProducts((prev) => [...prev, product]);
+  };
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <main className="container p-4 mx-auto bg-rose-100">
+      <h1 className="text-4xl font-extrabold mb-4">Desserts</h1>
+      <div className="grid grid-cols-1 gap-6 mb-6">
+        {PRODUCTS.map((product) => (
+          <ProductCart
+            isSelected={selectedProducts.includes(product)}
+            handleSelect={() => handleProductSelect(product)}
+            key={product.productName}
+            {...product}
+          />
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <YourCart />
+    </main>
+  );
 }
 
-export default App
+export default App;
