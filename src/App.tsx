@@ -69,10 +69,29 @@ const PRODUCTS = [
   },
 ];
 
+type SelectedProduct = {
+  productName: string;
+  productNameTwo: string;
+  price: number;
+  productCount: number;
+};
+
 function App() {
-  const [selectedProducts, setSelectedProducts] = useState<typeof PRODUCTS>([]);
+  const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>(
+    []
+  );
   const handleProductSelect = (product: (typeof PRODUCTS)[0]) => {
-    setSelectedProducts((prev) => [...prev, product]);
+    const { productName, price, productNameTwo } = product;
+    const addedProduct = {
+      productName,
+      productNameTwo,
+      price,
+      productCount: 1,
+    };
+    setSelectedProducts((prevSelectedProducts) => [
+      ...prevSelectedProducts,
+      addedProduct,
+    ]);
   };
   return (
     <main className="container p-4 mx-auto bg-rose-100">
@@ -80,8 +99,17 @@ function App() {
       <div className="grid grid-cols-1 gap-6 mb-6">
         {PRODUCTS.map((product) => (
           <ProductCart
-            isSelected={selectedProducts.includes(product)}
+            isSelected={selectedProducts.some(
+              (selectedProduct) =>
+                selectedProduct.productName === product.productName
+            )}
             handleSelect={() => handleProductSelect(product)}
+            productCount={
+              selectedProducts.find(
+                (selectedProduct) =>
+                  selectedProduct.productName === product.productName
+              )?.productCount || 0
+            }
             key={product.productName}
             {...product}
           />
