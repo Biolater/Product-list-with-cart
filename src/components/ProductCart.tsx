@@ -25,19 +25,23 @@ const ProductCart: React.FC<Props> = ({
     }
   };
   return (
-    <div>
-      <div className="max-h-56 mb-8 relative">
+    <motion.div layout transition={{ type: "spring", duration: 0.5 }}>
+      <div className="mb-8 relative lg:aspect-square lg:max-w-72">
         <img
-          className={`w-full transition-all duration-200 ease-in object-cover rounded-lg max-h-[inherit] ${
+          className={`w-full transition-all lg:h-full duration-200 ease-in object-cover rounded-lg max-h-[inherit] ${
             isSelected ? "border-2 border-red" : "border-2 border-transparent"
           }`}
           src={imageSrc}
           alt={productName}
         />
-        <button
+        <motion.button
+          animate={isSelected && { justifyContent: "space-between" }}
+          transition={{ delay: 0.3 }}
           onClick={handleAddToCart}
-          className={`w-40 min-h-[2.875rem] ${
-            isSelected ? "bg-red border-red" : "border-rose-300 bg-white "
+          className={`w-40 px-4 min-h-[2.875rem] max-h-[2.875rem] ${
+            isSelected
+              ? "bg-red border-red"
+              : "border-rose-300 bg-white "
           } transition-colors overflow-hidden hover:bg-red group/addBtn justify-center text-sm py-3 flex items-center gap-2 absolute left-1/2 -translate-x-1/2 -bottom-[1.4375rem] font-semibold rounded-3xl border`}
         >
           <AnimatePresence>
@@ -82,34 +86,79 @@ const ProductCart: React.FC<Props> = ({
           </AnimatePresence>
           <AnimatePresence>
             {isSelected && (
-              <>
-                <motion.div>
-                  
-                </motion.div>
-                <motion.div></motion.div>
-              </>
+              <motion.div
+                className="border hover:bg-white hover:text-red text-white border-white rounded-full size-6 flex items-center justify-center"
+                initial={{ opacity: 0, scale: 0, position: "absolute" }}
+                animate={{ opacity: 1, scale: 1, position: "relative" }}
+                exit={{ opacity: 0, scale: 0, position: "absolute" }}
+                transition={{ delay: 0.3 }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="2"
+                  fill="currentColor"
+                  viewBox="0 0 10 2"
+                >
+                  <path fill="currentColor" d="M0 .375h10v1.25H0V.375Z" />
+                </svg>
+              </motion.div>
             )}
           </AnimatePresence>
           <AnimatePresence>
             {isSelected && (
               <motion.span
                 className="text-white"
-                transition={{ delay: 0.2 }}
-                initial={{ opacity: 0, scale: 0, width: 0, position: "absolute" }}
-                animate={{ opacity: 1, scale: 1, width: "100%", position: "relative" }}
+                transition={{ delay: 0.3 }}
+                initial={{
+                  opacity: 0,
+                  scale: 0,
+                  width: 0,
+                  position: "absolute",
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  width: "auto",
+                  position: "relative",
+                }}
               >
                 {productCount}
               </motion.span>
             )}
           </AnimatePresence>
-        </button>
+          <AnimatePresence>
+            {isSelected && (
+              <motion.div
+                className="border hover:bg-white hover:text-red text-white border-white rounded-full size-6 flex items-center justify-center"
+                initial={{ opacity: 0, scale: 0, position: "absolute" }}
+                animate={{ opacity: 1, scale: 1, position: "relative" }}
+                exit={{ opacity: 0, scale: 0, position: "absolute" }}
+                transition={{ delay: 0.3 }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="10"
+                  fill="currentColor"
+                  viewBox="0 0 10 10"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                  />
+                </svg>{" "}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.button>
       </div>
       <div className="flex flex-col">
         <p className="text-rose-500 text-sm">{productName}</p>
         <h3 className="font-semibold ">{productNameTwo}</h3>
         <p className="text-red font-semibold">${price.toFixed(2)}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

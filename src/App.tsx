@@ -10,7 +10,8 @@ import cake from "./images/image-cake-mobile.jpg";
 import brownie from "./images/image-brownie-mobile.jpg";
 import pannaCotta from "./images/image-panna-cotta-mobile.jpg";
 import YourCart from "./components/YourCart";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { motion } from "motion/react";
 
 const PRODUCTS = [
   {
@@ -94,26 +95,28 @@ function App() {
     ]);
   };
   return (
-    <main className="container p-4 mx-auto bg-rose-100">
-      <h1 className="text-4xl font-extrabold mb-4">Desserts</h1>
-      <div className="grid grid-cols-1 gap-6 mb-6">
-        {PRODUCTS.map((product) => (
-          <ProductCart
-            isSelected={selectedProducts.some(
-              (selectedProduct) =>
-                selectedProduct.productName === product.productName
-            )}
-            handleSelect={() => handleProductSelect(product)}
-            productCount={
-              selectedProducts.find(
+    <main className="container p-4 mx-auto lg:flex gap-6 lg:justify-center">
+      <div>
+        <h1 className="text-4xl font-extrabold mb-4">Desserts</h1>
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[repeat(3,minmax(0,18rem))] gap-4 mb-6">
+          {PRODUCTS.map((product) => (
+            <ProductCart
+              isSelected={selectedProducts.some(
                 (selectedProduct) =>
                   selectedProduct.productName === product.productName
-              )?.productCount || 0
-            }
-            key={product.productName}
-            {...product}
-          />
-        ))}
+              )}
+              handleSelect={() => handleProductSelect(product)}
+              productCount={
+                selectedProducts.find(
+                  (selectedProduct) =>
+                    selectedProduct.productName === product.productName
+                )?.productCount || 0
+              }
+              key={product.productName}
+              {...product}
+            />
+          ))}
+        </motion.div>
       </div>
       <YourCart />
     </main>
