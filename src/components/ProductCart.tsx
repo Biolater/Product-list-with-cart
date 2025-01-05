@@ -39,9 +39,7 @@ const ProductCart: React.FC<Props> = ({
           transition={{ delay: 0.3 }}
           onClick={handleAddToCart}
           className={`w-40 px-4 min-h-[2.875rem] max-h-[2.875rem] ${
-            isSelected
-              ? "bg-red border-red"
-              : "border-rose-300 bg-white "
+            isSelected ? "bg-red border-red" : "border-rose-300 bg-white "
           } transition-colors overflow-hidden hover:bg-red group/addBtn justify-center text-sm py-3 flex items-center gap-2 absolute left-1/2 -translate-x-1/2 -bottom-[1.4375rem] font-semibold rounded-3xl border`}
         >
           <AnimatePresence>
