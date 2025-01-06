@@ -70,7 +70,7 @@ const PRODUCTS = [
   },
 ];
 
-type SelectedProduct = {
+export type SelectedProduct = {
   productName: string;
   productNameTwo: string;
   price: number;
@@ -130,13 +130,20 @@ function App() {
       }
     });
   };
+  const handleRemove = (productName: string) => {
+    setSelectedProducts((prevSelectedProducts) =>
+      prevSelectedProducts.filter(
+        (product) => product.productName !== productName
+      )
+    );
+  };
   return (
     <main className="container p-4 sm:p-6 md:p-8 lg:p-12 xl:p-16 mx-auto lg:flex gap-6 lg:justify-center">
       <div>
-        <h1 className="text-4xl font-extrabold mb-4 sm:text-5xl sm:mb-6 md:text-6xl">Desserts</h1>
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[repeat(3,minmax(0,18rem))] gap-4 mb-6"
-        >
+        <h1 className="text-4xl font-extrabold mb-4 sm:text-5xl sm:mb-6 md:text-6xl">
+          Desserts
+        </h1>
+        <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[repeat(3,minmax(0,18rem))] gap-4 mb-6">
           {PRODUCTS.map((product) => (
             <ProductCart
               onDecrement={() => handleDecrement(product.productName)}
@@ -158,7 +165,7 @@ function App() {
           ))}
         </motion.div>
       </div>
-      <YourCart />
+      <YourCart addedProducts={selectedProducts} onRemove={handleRemove} />
     </main>
   );
 }

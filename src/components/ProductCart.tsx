@@ -70,7 +70,7 @@ const ProductCart: React.FC<Props> = ({
                   </clipPath>
                 </defs>
               </svg>
-              <span className="transition-all duration-[250ms] ease-in group-hover/addBtn:text-white">
+              <span className="transition-all duration-300 ease-in group-hover/addBtn:text-white">
                 Add to Cart
               </span>
             </>
