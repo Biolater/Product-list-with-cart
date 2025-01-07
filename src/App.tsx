@@ -75,6 +75,7 @@ export type SelectedProduct = {
   productNameTwo: string;
   price: number;
   productCount: number;
+  imageSrc: string;
 };
 
 function App() {
@@ -88,6 +89,7 @@ function App() {
       productNameTwo,
       price,
       productCount: 1,
+      imageSrc: product.imageSrc,
     };
     setSelectedProducts((prevSelectedProducts) => [
       ...prevSelectedProducts,

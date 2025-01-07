@@ -13,6 +13,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useState } from "react";
+import confirmedImage from "../images/icon-order-confirmed.svg";
 
 const YourCart: React.FC<{
   addedProducts: SelectedProduct[];
@@ -28,10 +29,6 @@ const YourCart: React.FC<{
     (total, product) => total + product.price * product.productCount,
     0
   );
-
-  const handleConfirmOrder = () => {
-    setIsDrawerOpen(true);
-  };
 
   return (
     <div className="flex flex-col lg:self-start lg:basis-1/3 xl:basis-1/4 p-6 rounded-lg gap-6 bg-white">
@@ -72,26 +69,65 @@ const YourCart: React.FC<{
           </div>
           <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
             <DrawerTrigger asChild>
-              <button
-                className="w-full hover:bg-red/80 transition-colors py-4 rounded-full bg-red text-white"
-                onClick={handleConfirmOrder}
-              >
+              <button className="w-full hover:bg-red/80 transition-colors py-4 rounded-full bg-red text-white">
                 Confirm Order
               </button>
             </DrawerTrigger>
             <DrawerContent>
-              <DrawerHeader>
-                <DrawerTitle>Order Confirmation</DrawerTitle>
+              <DrawerHeader className="text-start p-5">
+                <img src={confirmedImage} alt="Confirmed" />
+                <DrawerTitle className="text-4xl font-bold max-w-72">
+                  Order Confirmed
+                </DrawerTitle>
                 <DrawerDescription>
-                  Your order has been confirmed.
+                  We hope you enjoyed your food!
                 </DrawerDescription>
               </DrawerHeader>
-              <div className="p-4">
-                <p>Total Items: {totalLength}</p>
-                <p>Total Price: ${totalPrice.toFixed(2)}</p>
+              <div className="p-5">
+                <div className="p-4 bg-rose-100 rounded-lg w-full">
+                  <ul>
+                    {addedProducts.map((product) => (
+                      <li
+                        key={product.productName}
+                        className="flex border-b border-b-rose-300/50 items-center gap-5 py-4"
+                      >
+                        <img
+                          className="size-14 object-cover rounded-md"
+                          src={product.imageSrc}
+                          alt={product.productName}
+                        />
+                        <div className="flex flex-col gap-1">
+                          <p className="font-semibold max-w-40 text-sm sm:max-w-full overflow-hidden whitespace-nowrap text-ellipsis">
+                            {product.productNameTwo}
+                          </p>
+                          <div className="flex gap-2">
+                            <span className="text-red font-semibold">
+                              {product.productCount}x
+                            </span>
+                            <span className="text-rose-500">
+                              @ {product.price.toFixed(2)}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="font-semibold ms-auto">
+                          ${(product.price * product.productCount).toFixed(2)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex justify-between items-center py-6">
+                    <p>Order Total</p>
+                    <p className="font-bold text-2xl">
+                      ${totalPrice.toFixed(2)}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <DrawerFooter>
+              <DrawerFooter className="p-5">
                 <DrawerClose asChild>
+                  <button className="w-full hover:bg-red/80 transition-colors py-4 rounded-full bg-red text-white">
+                    Start New Order
+                  </button>
                 </DrawerClose>
               </DrawerFooter>
             </DrawerContent>
