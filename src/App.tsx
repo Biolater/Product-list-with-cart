@@ -139,6 +139,9 @@ function App() {
       )
     );
   };
+  const handleStartNewOrder = () => {
+    setSelectedProducts([]);
+  };
   return (
     <main className="container p-4 sm:p-6 md:p-8 lg:p-12 xl:p-16 mx-auto lg:flex gap-6 lg:justify-center">
       <div>
@@ -167,7 +170,11 @@ function App() {
           ))}
         </motion.div>
       </div>
-      <YourCart addedProducts={selectedProducts} onRemove={handleRemove} />
+      <YourCart
+        onStartNewOrder={handleStartNewOrder}
+        addedProducts={selectedProducts}
+        onRemove={handleRemove}
+      />
     </main>
   );
 }
